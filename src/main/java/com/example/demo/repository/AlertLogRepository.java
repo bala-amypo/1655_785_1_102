@@ -1,7 +1,9 @@
 package com.example.demo.repository;
 
-public interface AlertLogRepository{
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface AlertLogRepository extends JpaRepository{
 
 
-    
+
 }
