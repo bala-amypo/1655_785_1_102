@@ -1,6 +1,5 @@
-package com.example.demo.;
+package com.example.demo.controller;
 
-public interface WarrantyService{
-
+public class WarrantyController{
     
 }
