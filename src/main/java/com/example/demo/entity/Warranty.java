@@ -10,8 +10,13 @@ public class Warranty{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private User user;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String brand;
+    private String modelNumber;
+    private String category;
     @ManyToOne
     private Product product;
     private LocalDate purchaseDate;
