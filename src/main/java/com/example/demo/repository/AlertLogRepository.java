@@ -6,4 +6,5 @@ public interface AlertLogRepository extends JpaRepository{
 
 
 
+
 }
