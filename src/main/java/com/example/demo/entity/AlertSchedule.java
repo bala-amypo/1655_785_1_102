@@ -1,6 +1,9 @@
 package com.example.demo.entity;
-
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.;
 
 @Entity
 public class AlertSchedule{
@@ -10,8 +13,8 @@ public class AlertSchedule{
     private Long id;
     @ManyToOne
     private Warranty warranty;
-    private  brand;
-    private String modelNumber;
-    private String category;
+    private Integer daysBeforeExpiry;
+    private Boolean enabled;
+   
 
 }
