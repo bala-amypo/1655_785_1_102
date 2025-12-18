@@ -20,7 +20,6 @@ public class AlertLog {
     private LocalDateTime sentAt;
     private String message;
 
-    // ✅ Constructors
     public AlertLog() {
     }
 
@@ -30,8 +29,6 @@ public class AlertLog {
         this.sentAt = sentAt;
         this.message = message;
     }
-
-    // ✅ Getters and Setters
 
     public Long getId() {
         return id;
