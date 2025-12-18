@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
-public interface AlertLogServiceImpl{
+public interface AlertLogServiceImpl implements {
+
 
     
 }
