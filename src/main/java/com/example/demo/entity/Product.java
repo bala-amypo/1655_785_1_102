@@ -33,25 +33,25 @@ public class Product{
         return brand;
     }
     public void setBrand(String brand){
-        this.brand=email;
+        this.brand=brand;
     }
-    public String getPassword(){
-        return password;
+    public String getmodelNumber(){
+        return modelNumber;
     }
-    public void setPassword(String password){
-        this.password=password;
+    public void setmodelNumber(String modelNumber){
+        this.modelNumber=modelNumber;
     }
-    public String getRole(){
-        return role;
+    public String getcategory(){
+        return category;
     }
-    public void setRole(String role){
-        this.role=role;
+    public void setcategory(String category){
+        this.category=category;
     }
 
-  public Product(String name,Long id,String email,String password,String role){
+  public Product(String name,Long id,String brand,String modelNumber,String category){
         this.name=name;
         this.id=id;
-        this.email=email;
+        this.brand=brand;
         this.password=password;
         this.role=role;
     }
