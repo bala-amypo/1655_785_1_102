@@ -21,7 +21,7 @@ public class Product{
     public void setName(String name){
         this.name=name;
     }
-
+    
     public Long getId(){
         return id;
     }
@@ -52,8 +52,8 @@ public class Product{
         this.name=name;
         this.id=id;
         this.brand=brand;
-        this.password=password;
-        this.role=role;
+        this.modelNumber=modelNumber;
+        this.category=category;
     }
     public Product(){
     }
