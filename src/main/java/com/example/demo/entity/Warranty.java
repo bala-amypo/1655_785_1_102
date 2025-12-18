@@ -9,9 +9,11 @@ public class Warranty{
      @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    @ManyToOne
+    private User user;
     @Column(unique=true)
     private String email;
     private String password;
-    private String role;
+    @Column(unique=true)
+    private String serialNumber;
 }
