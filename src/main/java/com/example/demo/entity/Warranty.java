@@ -5,22 +5,37 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.Column;
 import java.time.LocalDate;
+import jakarta.persistence.ManyToOne;
 @Entity
 public class Warranty{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private String brand;
-    private String modelNumber;
-    private String category;
+    @ManyToOne
+    private User user;
     @ManyToOne
     private Product product;
     private LocalDate purchaseDate;
     private LocalDate expiryDate;
     @Column(unique=true)
     private String serialNumber;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }
