@@ -15,6 +15,8 @@ public class AlertSchedule{
     private Warranty warranty;
     private Integer daysBeforeExpiry;
     private Boolean enabled;
+
+    
    
 
 }
