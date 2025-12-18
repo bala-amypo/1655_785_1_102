@@ -3,17 +3,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
-
+import jakarta.validation.constraints.Column;
+import java.time.LocalDate;
 @Entity
 public class Warranty{
-     @Id
+    @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private User user;
-    @Column(unique=true)
-    private String email;
-    private String password;
+    @ManyToOne
+    private Product product;
+    private LocalDate purchaseDate;
+    private LocalDate expiryDate;
     @Column(unique=true)
     private String serialNumber;
 }
