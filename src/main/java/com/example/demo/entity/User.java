@@ -15,7 +15,6 @@ public class User{
     private String password;
     private String role;
 
-
     public String getName(){
         return name;
     }
@@ -49,14 +48,13 @@ public class User{
         this.role=role;
     }
 
-  public User(String name,Integer id,String email,String password,Date created){
+  public User(String name,Long id,String email,String password,String role){
         this.name=name;
         this.id=id;
         this.email=email;
         this.password=password;
-        this.created=created;
+        this.role=role;
     }
     public User(){
     }
-
 }
