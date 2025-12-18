@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class AlertLog{
@@ -14,6 +15,6 @@ public class AlertLog{
     private Long id;
     @ManyToOne
     private Warranty warranty;
-    private ;
+    private LocalDateTime sentAt;
     private String message;
 }
