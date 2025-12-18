@@ -21,11 +21,11 @@ public class Warranty{
     private String serialNumber;
 
 
-public String getName(){
-        return name;
+public User getUser(){
+        return user;
     }
-    public void setName(String name){
-        this.name=name;
+    public void setUser(String user){
+        this.user=user;
     }
     
     public Long getId(){
