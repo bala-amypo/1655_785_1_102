@@ -6,6 +6,8 @@ package com.example.demo.controller;
 public class AuthController{
    @Autowired UserService us;
    @PostMapping("/auth")
-   public User sendData(@RequestBody )
+   public User sendData(@RequestBody User user){
+    return us.register(user);
+   }
 
 }
