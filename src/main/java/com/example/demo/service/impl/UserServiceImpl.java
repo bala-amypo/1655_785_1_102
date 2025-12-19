@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Service
-public interface UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
     
 @Autowired UserRepository users;
 @Override
