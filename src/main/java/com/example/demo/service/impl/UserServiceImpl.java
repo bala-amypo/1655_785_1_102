@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class UserServiceImpl implements UserService {
-    
 @Autowired UserRepository users;
 @Override
 public User register(User user){
@@ -17,9 +16,5 @@ public User register(User user){
 return users.save(user);
 }
 
-@Override
-public User findByEmail(String email){
-return users.findByEmail(email);
 
-}
 }
