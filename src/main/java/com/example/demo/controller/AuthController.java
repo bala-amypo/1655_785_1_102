@@ -5,13 +5,13 @@ package com.example.demo.controller;
 @RestController
 public class AuthController{
    @Autowired UserService us;
-   @PostMapping("/auth/register")
+   @PostMapping("/register")
    public User sendData(@RequestBody User user){
     return us.register(user);
    }
-   
+
    @PostMapping("/login")
-   public  findByEmail(@RequestBody User user){
+   public String findByEmail(String email){
     return us.(email);
    }
 
