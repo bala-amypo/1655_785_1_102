@@ -6,11 +6,12 @@ import jakarta.persistence.GeneratedValue;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
+import lombok.Builder;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Product{
      @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

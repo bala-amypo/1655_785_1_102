@@ -7,11 +7,12 @@ import jakarta.validation.constraints.Column;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-
+import lombok.Builder;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class User{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
