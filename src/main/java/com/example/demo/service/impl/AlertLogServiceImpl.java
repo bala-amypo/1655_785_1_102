@@ -1,7 +1,7 @@
-package com.example.demo.service.impl;
+// package com.example.demo.service.impl;
 
-public interface AlertLogServiceImpl implements {
+// public interface AlertLogServiceImpl implements {
 
 
     
-}
+// }
