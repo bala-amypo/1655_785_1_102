@@ -6,8 +6,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AlertLog {
 
     @Id
@@ -20,45 +25,4 @@ public class AlertLog {
     private LocalDateTime sentAt;
     private String message;
 
-    public AlertLog() {
-    }
-
-    public AlertLog(Long id, Warranty warranty, LocalDateTime sentAt, String message) {
-        this.id = id;
-        this.warranty = warranty;
-        this.sentAt = sentAt;
-        this.message = message;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Warranty getWarranty() {
-        return warranty;
-    }
-
-    public void setWarranty(Warranty warranty) {
-        this.warranty = warranty;
-    }
-
-    public LocalDateTime getSentAt() {
-        return sentAt;
-    }
-
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 }
