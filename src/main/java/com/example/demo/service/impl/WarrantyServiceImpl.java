@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-public interface WarrantyServiceImpl{
+public class WarrantyServiceImpl{
 
     
 }
