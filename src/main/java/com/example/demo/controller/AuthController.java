@@ -9,10 +9,4 @@ public class AuthController{
    public User sendData(@RequestBody User user){
     return us.register(user);
    }
-
-   @PostMapping("/login")
-   public String findByEmail(String email){
-    return us.(email);
-   }
-
 }
