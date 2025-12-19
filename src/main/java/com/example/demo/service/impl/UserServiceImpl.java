@@ -10,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Service
 public interface UserServiceImpl implements UserService {
     
-@Autowired UserRepository user;
+@Autowired UserRepository users;
 @Override
 public User register(User user){
 
+return users.save(user)
 }
 
-
 @Override
+public User findByEmail(String email){
 
+return users.
+
+}
 }
