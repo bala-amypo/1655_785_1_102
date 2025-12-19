@@ -9,7 +9,7 @@ public class AuthController{
    public User sendData(@RequestBody User user){
     return us.register(user);
    }
-   @PostMapping("/auth/login")
+   @PostMapping("/login")
    public  findByemail(@RequestBody User user){
     return us.register(email);
    }
