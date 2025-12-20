@@ -1,10 +1,11 @@
 package com.example.demo.service;
+
 import com.example.demo.entity.AlertLog;
-import java.util.List;
 
-public interface AlertLogService{
+public interface AlertLogService {
 
-AlertLog addlog(Long warrantyId,String message);
-List<AlertLog> getLogs(Long warrantyId);
+    AlertLog postdata5(AlertLog alertLog);
+    
+    AlertLog getdata5(Long id); 
     
 }
