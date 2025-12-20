@@ -1,14 +1,16 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.demo.entity.Warranty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -24,6 +26,6 @@ public class AlertSchedule {
     private Warranty warranty;
 
     private Integer daysBeforeExpiry;
-    private Boolean enabled;
 
+    private Boolean enabled;
 }
