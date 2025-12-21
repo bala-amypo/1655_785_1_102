@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-
 public class AlertScheduleServiceImpl implements AlertScheduleService {
 
     private final AlertScheduleRepository scheduleRepo;
@@ -30,7 +29,6 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
 
         schedule.setWarranty(warranty);
-        schedule.setEnabled(true);
 
         return scheduleRepo.save(schedule);
     }
@@ -39,22 +37,23 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
     public List<AlertSchedule> getSchedules(Long warrantyId) {
         return scheduleRepo.findByWarrantyId(warrantyId);
     }
+
     @Override
-public AlertSchedule updateSchedule(Long id, AlertSchedule schedule) {
-    AlertSchedule existing = scheduleRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+    public AlertSchedule updateSchedule(Long id, AlertSchedule schedule) {
 
-    existing.setAlertDate(schedule.getAlertDate());
-    existing.setWarranty(schedule.getWarranty());
+        AlertSchedule existing = scheduleRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
 
-    return scheduleRepo.save(existing);
-}
+        existing.setWarranty(schedule.getWarranty());
 
-@Override
-public void deleteSchedule(Long id) {
-    AlertSchedule schedule = scheduleRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
-    scheduleRepo.delete(schedule);
-}
+        return scheduleRepo.save(existing);
+    }
 
+    @Override
+    public void deleteSchedule(Long id) {
+        AlertSchedule schedule = scheduleRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
+
+        scheduleRepo.delete(schedule);
+    }
 }
