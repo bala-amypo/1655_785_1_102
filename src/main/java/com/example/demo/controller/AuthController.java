@@ -1,18 +1,26 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import com.example.demo.service.UserService;
 import com.example.demo.entity.User;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.service.UserService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-public class AuthController{
+@RequestMapping("/users")
+public class AuthController {
 
-   @Autowired UserService us;
-   @PostMapping("/register")
-   public User sendData(@RequestBody User user){
-    return us.register(user);
-   }
+    private final UserService service;
+
+    public UserController(UserService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/register")
+    public User register(@RequestBody User user) {
+        return service.register(user);
+    }
+
+    @GetMapping("/email/{email}")
+    public User getByEmail(@PathVariable String email) {
+        return service.findByEmail(email);
+    }
 }

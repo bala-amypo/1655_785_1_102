@@ -1,26 +1,29 @@
 package com.example.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.entity.AlertLog;
 import com.example.demo.service.AlertLogService;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
+@RequestMapping("/alerts/logs")
 public class AlertLogController {
 
-         @Autowired AlertLogService alertlog;
-   @PostMapping("/add alert logs")
-   public AlertLog sendDatas(@RequestBody AlertLog alertsss){
-    return alertlog.postdata5(alertsss);
-   }
-@GetMapping("/view alert log")
-public AlertLog getalldatas(Long id){
-    return alertlog.getdata5(id);
-}
+    private final AlertLogService service;
 
+    public AlertLogController(AlertLogService service) {
+        this.service = service;
+    }
 
+    @PostMapping("/{warrantyId}")
+    public AlertLog addLog(@PathVariable Long warrantyId,
+                           @RequestBody String message) {
+        return service.addLog(warrantyId, message);
+    }
+
+    @GetMapping("/{warrantyId}")
+    public List<AlertLog> getLogs(@PathVariable Long warrantyId) {
+        return service.getLogs(warrantyId);
+    }
 }

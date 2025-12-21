@@ -1,25 +1,28 @@
 package com.example.demo.controller;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/products")
 public class ProductController {
 
+    private final ProductService service;
 
-      @Autowired ProductService prds;
-   @PostMapping("/add a product")
-   public Product sendData1(@RequestBody Product product){
-    return prds.addaproduct(product);
-   }
-@GetMapping("/list all products")
-public List<Product> getalldata(){
-    return prds.getalldata();
-}
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
+
+    @PostMapping
+    public Product addProduct(@RequestBody Product product) {
+        return service.addProduct(product);
+    }
+
+    @GetMapping
+    public List<Product> getAll() {
+        return service.getAllProducts();
+    }
 }
