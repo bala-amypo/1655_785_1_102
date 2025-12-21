@@ -40,4 +40,21 @@ public class AlertLogServiceImpl implements AlertLogService {
     public List<AlertLog> getLogs(Long warrantyId) {
         return logRepo.findByWarrantyId(warrantyId);
     }
+     @Override
+public AlertLog updateAlert(Long id, AlertLog alertLog) {
+    AlertLog existing = logRepo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Alert not found"));
+
+    existing.setMessage(alertLog.getMessage());
+    existing.setSentAt(alertLog.getSentAt());
+
+    return logRepo.save(existing);
+}
+
+@Override
+public void deleteAlert(Long id) {
+    AlertLog alert = logRepo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Alert not found"));
+    logRepo.delete(alert);
+}
 }

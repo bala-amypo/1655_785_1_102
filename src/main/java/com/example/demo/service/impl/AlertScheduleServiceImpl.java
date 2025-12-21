@@ -56,3 +56,4 @@ public void deleteSchedule(Long id) {
             .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
     scheduleRepo.delete(schedule);
 }
+}

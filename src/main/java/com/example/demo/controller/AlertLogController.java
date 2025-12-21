@@ -26,4 +26,14 @@ public class AlertLogController {
     public List<AlertLog> getLogs(@PathVariable Long warrantyId) {
         return service.getLogs(warrantyId);
     }
+    @PutMapping("/{id}")
+public AlertLog updateAlert(@PathVariable Long id, @RequestBody AlertLog alertLog) {
+    return service.updateAlert(id, alertLog);
+}
+
+@DeleteMapping("/{id}")
+public String deleteAlert(@PathVariable Long id) {
+    service.deleteAlert(id);
+    return "Alert deleted successfully";
+}
 }
