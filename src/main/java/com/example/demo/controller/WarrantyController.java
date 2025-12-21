@@ -1,33 +1,43 @@
-package com.example.demo.controller;
-import java.util.List;
+package com.example.demo.entity;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
+import java.time.LocalDate;
 
-import com.example.demo.entity.Warranty;
-import com.example.demo.service.WarrantyService;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
 
-@RestController
-public class WarrantyController {
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder 
 
-  @Autowired WarrantyService warrans;
+public class Warranty {
+     @Id
+     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long id;
 
-   @PostMapping("/register-warranty")
-   public Warranty sendData2(@RequestBody Warranty warranty){
-    return warrans.postdata2(warranty);
-   }
+    @ManyToOne
+     
+    private Product product;
 
-  @GetMapping("/get-warranty/{id}")
-   public Warranty getdata2(@PathVariable Long id){
-    return warrans.getdata1(id);
-   }
-@GetMapping("/list-all-products")
-public List<Warranty> getalldata3(){
-    return warrans.getalldatas();
-}
+    @ManyToOne
+    
+    private User user;
+
+    private LocalDate purchaseDate;
+    private LocalDate expiryDate;
+     @Column(unique=true)
+    private String serialNumber;
+
+   
 
 }
