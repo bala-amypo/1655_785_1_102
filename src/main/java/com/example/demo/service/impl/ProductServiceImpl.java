@@ -27,4 +27,22 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return repo.findAll();
     }
+        @Override
+public Product updateProduct(Long id, Product product) {
+    Product existing = repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+
+    existing.setName(product.getName());
+    existing.setCategory(product.getCategory());
+
+    return repo.save(existing);
+}
+
+@Override
+public void deleteProduct(Long id) {
+    Product product = repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+    repo.delete(product);
+}
+
 }

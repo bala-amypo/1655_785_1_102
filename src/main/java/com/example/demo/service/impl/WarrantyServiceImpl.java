@@ -52,4 +52,25 @@ public class WarrantyServiceImpl implements WarrantyService {
     public List<Warranty> getUserWarranties(Long userId) {
         return warrantyRepo.findByUserId(userId);
     }
+     @Override
+public Warranty updateWarranty(Long id, Warranty warranty) {
+    Warranty existing = warrantyRepo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+
+    existing.setProduct(warranty.getProduct());
+    existing.setUser(warranty.getUser());
+    existing.setPurchaseDate(warranty.getPurchaseDate());
+    existing.setExpiryDate(warranty.getExpiryDate());
+    existing.setSerialNumber(warranty.getSerialNumber());
+
+    return warrantyRepo.save(existing);
+}
+
+@Override
+public void deleteWarranty(Long id) {
+    Warranty warranty = warrantyRepo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+    warrantyRepo.delete(warranty);
+}
+
 }
