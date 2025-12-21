@@ -26,4 +26,15 @@ public class AlertScheduleController {
     public List<AlertSchedule> getSchedules(@PathVariable Long warrantyId) {
         return service.getSchedules(warrantyId);
     }
+      @PutMapping("/{id}")
+public AlertSchedule updateSchedule(@PathVariable Long id, @RequestBody AlertSchedule schedule) {
+    return service.updateSchedule(id, schedule);
+}
+
+@DeleteMapping("/{id}")
+public String deleteSchedule(@PathVariable Long id) {
+    service.deleteSchedule(id);
+    return "Schedule deleted successfully";
+}
+
 }

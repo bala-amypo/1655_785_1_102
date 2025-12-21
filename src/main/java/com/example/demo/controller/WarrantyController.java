@@ -32,4 +32,14 @@ public class WarrantyController {
     public List<Warranty> getUserWarranties(@PathVariable Long userId) {
         return service.getUserWarranties(userId);
     }
+      @PutMapping("/{id}")
+public Warranty updateWarranty(@PathVariable Long id, @RequestBody Warranty warranty) {
+    return service.updateWarranty(id, warranty);
+}
+
+@DeleteMapping("/{id}")
+public String deleteWarranty(@PathVariable Long id) {
+    service.deleteWarranty(id);
+    return "Warranty deleted successfully";
+}
 }
