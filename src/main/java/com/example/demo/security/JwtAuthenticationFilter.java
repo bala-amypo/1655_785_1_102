@@ -11,10 +11,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+
 import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+@Autowired
+private JwtTokenProvider jwtTokenProvider;
 
     private final JwtTokenProvider tokenProvider;
     private final CustomUserDetailsService userDetailsService;
@@ -53,4 +56,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
+    if (jwtTokenProvider.validateToken(token)) {
+    String username = jwtTokenProvider.getUsernameFromToken(token);
+}
+
 }
