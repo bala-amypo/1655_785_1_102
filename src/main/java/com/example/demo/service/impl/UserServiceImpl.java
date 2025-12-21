@@ -29,4 +29,24 @@ public class UserServiceImpl implements UserService {
         return repo.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
+    @Override
+public User updateUser(Long id, User user) {
+    User existing = repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+    existing.setName(user.getName());
+    existing.setEmail(user.getEmail());
+    existing.setPassword(user.getPassword());
+    existing.setRole(user.getRole());
+
+    return repo.save(existing);
+}
+
+@Override
+public void deleteUser(Long id) {
+    User user = repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    repo.delete(user);
+}
+
 }
