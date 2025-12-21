@@ -39,7 +39,7 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
     public List<AlertSchedule> getSchedules(Long warrantyId) {
         return scheduleRepo.findByWarrantyId(warrantyId);
     }
-     @Override
+    @Override
 public AlertSchedule updateSchedule(Long id, AlertSchedule schedule) {
     AlertSchedule existing = scheduleRepo.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
@@ -56,4 +56,5 @@ public void deleteSchedule(Long id) {
             .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
     scheduleRepo.delete(schedule);
 }
+
 }

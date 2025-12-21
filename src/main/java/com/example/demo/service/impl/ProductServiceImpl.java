@@ -1,6 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Product;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAllProducts() {
         return repo.findAll();
     }
-        @Override
+    @Override
 public Product updateProduct(Long id, Product product) {
     Product existing = repo.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
