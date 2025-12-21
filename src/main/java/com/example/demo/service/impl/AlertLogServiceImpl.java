@@ -1,26 +1,43 @@
 package com.example.demo.service.impl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.AlertLog;
+import com.example.demo.entity.Warranty;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.repository.AlertLogRepository;
+import com.example.demo.repository.WarrantyRepository;
 import com.example.demo.service.AlertLogService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AlertLogServiceImpl implements AlertLogService {
-    
-  
-    @Autowired
-    private AlertLogRepository alertLogRepository;
 
-    @Override
-    public AlertLog postdata5(AlertLog alertLog) {
-        return alertLogRepository.save(alertLog);
+    private final AlertLogRepository logRepo;
+    private final WarrantyRepository warrantyRepo;
+
+    public AlertLogServiceImpl(AlertLogRepository logRepo,
+                               WarrantyRepository warrantyRepo) {
+        this.logRepo = logRepo;
+        this.warrantyRepo = warrantyRepo;
     }
 
     @Override
-    public AlertLog getdata5(Long id) {
-        return alertLogRepository.findById(id).orElse(null);
+    public AlertLog addLog(Long warrantyId, String message) {
+
+        Warranty warranty = warrantyRepo.findById(warrantyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+
+        AlertLog log = AlertLog.builder()
+                .warranty(warranty)
+                .message(message)
+                .build();
+
+        return logRepo.save(log);
     }
 
+    @Override
+    public List<AlertLog> getLogs(Long warrantyId) {
+        return logRepo.findByWarrantyId(warrantyId);
+    }
 }
