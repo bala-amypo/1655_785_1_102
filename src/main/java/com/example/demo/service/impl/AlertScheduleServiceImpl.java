@@ -29,8 +29,8 @@ public class AlertScheduleServiceImpl implements AlertScheduleService {
         Warranty warranty = warrantyRepo.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
 
-        schedule.setWarranty(warranty);
-        schedule.setEnabled(true);
+        scheduleRepo.setWarranty(warranty);
+        scheduleRepo.setEnabled(true);
 
         return scheduleRepo.save(schedule);
     }
