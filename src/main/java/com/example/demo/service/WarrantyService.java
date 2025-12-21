@@ -7,6 +7,7 @@ public interface WarrantyService {
     Warranty registerWarranty(Long userId, Long productId, Warranty warranty);
     Warranty getWarranty(Long warrantyId);
     List<Warranty> getUserWarranties(Long userId);
-     Warranty updateWarranty(Long id, Warranty warranty);
+    Warranty updateWarranty(Long id, Warranty warranty);
    void deleteWarranty(Long id);
+
 }

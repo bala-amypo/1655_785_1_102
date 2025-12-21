@@ -52,7 +52,8 @@ public class WarrantyServiceImpl implements WarrantyService {
     public List<Warranty> getUserWarranties(Long userId) {
         return warrantyRepo.findByUserId(userId);
     }
-     @Override
+
+    @Override
 public Warranty updateWarranty(Long id, Warranty warranty) {
     Warranty existing = warrantyRepo.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
