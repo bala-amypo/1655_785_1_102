@@ -1,77 +1,71 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
+import com.example.demo.entity.Warranty;
+import com.example.demo.entity.User;
+import com.example.demo.entity.Product;
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.repository.*;
+import com.example.demo.repository.WarrantyRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.WarrantyService;
+
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+
+
 @Service
 public class WarrantyServiceImpl implements WarrantyService {
 
-    private final WarrantyRepository warrantyRepo;
-    private final UserRepository userRepo;
-    private final ProductRepository productRepo;
+    private final WarrantyRepository warrantyRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
-    public WarrantyServiceImpl(WarrantyRepository w, UserRepository u, ProductRepository p) {
-        this.warrantyRepo = w;
-        this.userRepo = u;
-        this.productRepo = p;
+    public WarrantyServiceImpl(WarrantyRepository warrantyRepository,
+                               UserRepository userRepository,
+                               ProductRepository productRepository) {
+        this.warrantyRepository = warrantyRepository;
+        this.userRepository = userRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public Warranty registerWarranty(Long userId, Long productId, Warranty warranty) {
 
-        if (warrantyRepo.existsBySerialNumber(warranty.getSerialNumber())) {
-            throw new RuntimeException("Serial number must be unique");
-        }
-
-        if (warranty.getExpiryDate().isBefore(warranty.getPurchaseDate())) {
-            throw new RuntimeException("Expiry date must be after purchase date");
-        }
-
-        User user = userRepo.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        Product product = productRepo.findById(productId)
+
+        Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
-        warranty.setUser(user);
-        warranty.setProduct(product);
+        warranty.setId(null);          // force insert
+        warranty.setUser(user);        // override user
+        warranty.setProduct(product);  // override product
 
-        return warrantyRepo.save(warranty);
+        LocalDate purchase = warranty.getPurchaseDate();
+        LocalDate expiry = warranty.getExpiryDate();
+
+        if (purchase != null && expiry != null && !expiry.isAfter(purchase)) {
+            throw new IllegalArgumentException("Expiry date must be after purchase date");
+        }
+
+        if (warrantyRepository.existsBySerialNumber(warranty.getSerialNumber())) {
+            throw new IllegalArgumentException("Serial number must be unique");
+        }
+
+        return warrantyRepository.save(warranty);
     }
+
 
     @Override
     public Warranty getWarranty(Long warrantyId) {
-        return warrantyRepo.findById(warrantyId)
+        return warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
     }
 
     @Override
     public List<Warranty> getUserWarranties(Long userId) {
-        return warrantyRepo.findByUserId(userId);
+        return warrantyRepository.findByUserId(userId);
     }
-
-    @Override
-public Warranty updateWarranty(Long id, Warranty warranty) {
-    Warranty existing = warrantyRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
-
-    existing.setProduct(warranty.getProduct());
-    existing.setUser(warranty.getUser());
-    existing.setPurchaseDate(warranty.getPurchaseDate());
-    existing.setExpiryDate(warranty.getExpiryDate());
-    existing.setSerialNumber(warranty.getSerialNumber());
-
-    return warrantyRepo.save(existing);
-}
-
-@Override
-public void deleteWarranty(Long id) {
-    Warranty warranty = warrantyRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
-    warrantyRepo.delete(warranty);
-}
-
 }
