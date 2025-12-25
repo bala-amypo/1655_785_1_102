@@ -1,3 +1,4 @@
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.AlertLog;
@@ -13,49 +14,30 @@ import java.util.List;
 @Service
 public class AlertLogServiceImpl implements AlertLogService {
 
-    private final AlertLogRepository logRepo;
-    private final WarrantyRepository warrantyRepo;
+    private final AlertLogRepository logRepository;
+    private final WarrantyRepository warrantyRepository;
 
-    public AlertLogServiceImpl(AlertLogRepository logRepo,
-                               WarrantyRepository warrantyRepo) {
-        this.logRepo = logRepo;
-        this.warrantyRepo = warrantyRepo;
+    public AlertLogServiceImpl(AlertLogRepository logRepository,
+                               WarrantyRepository warrantyRepository) {
+        this.logRepository = logRepository;
+        this.warrantyRepository = warrantyRepository;
     }
 
     @Override
     public AlertLog addLog(Long warrantyId, String message) {
-
-        Warranty warranty = warrantyRepo.findById(warrantyId)
+        Warranty warranty = warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
-
         AlertLog log = AlertLog.builder()
                 .warranty(warranty)
                 .message(message)
                 .build();
-
-        return logRepo.save(log);
+        return logRepository.save(log);
     }
 
     @Override
     public List<AlertLog> getLogs(Long warrantyId) {
-        return logRepo.findByWarrantyId(warrantyId);
+        warrantyRepository.findById(warrantyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+        return logRepository.findByWarrantyId(warrantyId);
     }
-    @Override
-public AlertLog updateAlert(Long id, AlertLog alertLog) {
-    AlertLog existing = logRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Alert not found"));
-
-    existing.setMessage(alertLog.getMessage());
-    existing.setSentAt(alertLog.getSentAt());
-
-    return logRepo.save(existing);
-}
-
-@Override
-public void deleteAlert(Long id) {
-    AlertLog alert = logRepo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Alert not found"));
-    logRepo.delete(alert);
-}
-
 }

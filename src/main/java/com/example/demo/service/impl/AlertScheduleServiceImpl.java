@@ -1,3 +1,4 @@
+
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.AlertSchedule;
@@ -13,47 +14,33 @@ import java.util.List;
 @Service
 public class AlertScheduleServiceImpl implements AlertScheduleService {
 
-    private final AlertScheduleRepository scheduleRepo;
-    private final WarrantyRepository warrantyRepo;
+    private final AlertScheduleRepository scheduleRepository;
+    private final WarrantyRepository warrantyRepository;
 
-    public AlertScheduleServiceImpl(AlertScheduleRepository scheduleRepo,
-                                    WarrantyRepository warrantyRepo) {
-        this.scheduleRepo = scheduleRepo;
-        this.warrantyRepo = warrantyRepo;
+    public AlertScheduleServiceImpl(AlertScheduleRepository scheduleRepository,
+                                    WarrantyRepository warrantyRepository) {
+        this.scheduleRepository = scheduleRepository;
+        this.warrantyRepository = warrantyRepository;
     }
 
     @Override
     public AlertSchedule createSchedule(Long warrantyId, AlertSchedule schedule) {
-
-        Warranty warranty = warrantyRepo.findById(warrantyId)
+        Warranty warranty = warrantyRepository.findById(warrantyId)
                 .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
-
+        if (schedule.getDaysBeforeExpiry() == null || schedule.getDaysBeforeExpiry() < 0) {
+            throw new IllegalArgumentException("daysBeforeExpiry must be >= 0");
+        }
         schedule.setWarranty(warranty);
-
-        return scheduleRepo.save(schedule);
+        if (schedule.getEnabled() == null) {
+            schedule.setEnabled(Boolean.TRUE);
+        }
+        return scheduleRepository.save(schedule);
     }
 
     @Override
     public List<AlertSchedule> getSchedules(Long warrantyId) {
-        return scheduleRepo.findByWarrantyId(warrantyId);
-    }
-
-    @Override
-    public AlertSchedule updateSchedule(Long id, AlertSchedule schedule) {
-
-        AlertSchedule existing = scheduleRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
-
-        existing.setWarranty(schedule.getWarranty());
-
-        return scheduleRepo.save(existing);
-    }
-
-    @Override
-    public void deleteSchedule(Long id) {
-        AlertSchedule schedule = scheduleRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule not found"));
-
-        scheduleRepo.delete(schedule);
+        warrantyRepository.findById(warrantyId)
+                .orElseThrow(() -> new ResourceNotFoundException("Warranty not found"));
+        return scheduleRepository.findByWarrantyId(warrantyId);
     }
 }
