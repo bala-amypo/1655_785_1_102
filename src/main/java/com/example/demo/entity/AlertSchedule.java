@@ -1,21 +1,18 @@
+
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import com.example.demo.entity.Warranty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Data
+@Table(name = "alert_schedules")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(value = {"id", "warranty"}, allowSetters = false)
 public class AlertSchedule {
 
     @Id
@@ -26,6 +23,5 @@ public class AlertSchedule {
     private Warranty warranty;
 
     private Integer daysBeforeExpiry;
-
     private Boolean enabled;
 }

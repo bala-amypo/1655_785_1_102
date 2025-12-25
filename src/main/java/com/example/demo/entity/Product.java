@@ -1,26 +1,37 @@
+
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
-@Data
+@Table(name = "products")
+@Getter
+@Setter
 @NoArgsConstructor
- @AllArgsConstructor
-@Builder 
+@AllArgsConstructor
+@Builder
 public class Product {
-     @Id
-     @GeneratedValue(strategy=GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String brand;
     private String modelNumber;
     private String category;
 
+    // @OneToMany(mappedBy = "product")
+    // private List<Warranty> warranties;
+
+    // public Product(Long id, String name, String brand, String modelNumber, String category) {
+    //     this.id = id;
+    //     this.name = name;
+    //     this.brand = brand;
+    //     this.modelNumber = modelNumber;
+    //     this.category = category;
+    // }
 }

@@ -1,43 +1,35 @@
+
 package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-
 @Entity
-@Data
+@Table(name = "warranties")
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder 
-
+@Builder
+@JsonIgnoreProperties(value = {"id", "user", "product"}, allowSetters = false)
 public class Warranty {
-     @Id
-     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-     
-    private Product product;
+    private User user;
 
     @ManyToOne
-    
-    private User user;
+    private Product product;
 
     private LocalDate purchaseDate;
     private LocalDate expiryDate;
-     @Column(unique=true)
+
+    @Column(unique = true)
     private String serialNumber;
-
-   
-
 }
