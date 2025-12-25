@@ -1,37 +1,61 @@
+
 package com.example.demo.controller;
 
+import com.example.demo.dto.AuthRequest;
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.dto.RegisterRequest;
 import com.example.demo.entity.User;
+import com.example.demo.security.JwtTokenProvider;
 import com.example.demo.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/auth")
+@Tag(name = "Authentication")
+
 public class AuthController {
 
-    private final UserService service;
+    private final UserService userService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public AuthController(UserService service) {
-        this.service = service;
+    public AuthController(UserService userService, JwtTokenProvider jwtTokenProvider) {
+        this.userService = userService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return service.register(user);
+    @Operation(summary = "Register a new user")
+    public ResponseEntity<User> register(@RequestBody RegisterRequest request) {
+        User user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .role(request.getRole())
+                .build();
+        User saved = userService.register(user);
+        return ResponseEntity.ok(saved);
     }
 
-    @GetMapping("/email/{email}")
-    public User getByEmail(@PathVariable String email) {
-        return service.findByEmail(email);
+    @PostMapping("/login")
+    @Operation(summary = "Login and get JWT token")
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+        User user = userService.findByEmail(request.getEmail());
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            return ResponseEntity.status(401).build();
+        }
+        String token = jwtTokenProvider.createToken(user.getId(), user.getEmail(), user.getRole());
+        AuthResponse resp = new AuthResponse();
+        resp.setToken(token);
+        resp.setUserId(user.getId());
+        resp.setEmail(user.getEmail());
+        resp.setRole(user.getRole());
+        return ResponseEntity.ok(resp);
     }
-    @PutMapping("/{id}")
-public User updateUser(@PathVariable Long id, @RequestBody User user) {
-    return service.updateUser(id, user);
-}
-
-@DeleteMapping("/{id}")
-public String deleteUser(@PathVariable Long id) {
-    service.deleteUser(id);
-    return "User deleted successfully";
-}
-
 }

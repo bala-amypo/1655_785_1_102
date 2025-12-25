@@ -1,39 +1,37 @@
+
 package com.example.demo.controller;
 
 import com.example.demo.entity.AlertLog;
 import com.example.demo.service.AlertLogService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/alerts/logs")
+@RequestMapping("/logs")
+@Tag(name = "Alert Logs")
 public class AlertLogController {
 
-    private final AlertLogService service;
+    private final AlertLogService logService;
 
-    public AlertLogController(AlertLogService service) {
-        this.service = service;
+    public AlertLogController(AlertLogService logService) {
+        this.logService = logService;
     }
 
     @PostMapping("/{warrantyId}")
-    public AlertLog addLog(@PathVariable Long warrantyId,
-                           @RequestBody String message) {
-        return service.addLog(warrantyId, message);
+    @Operation(summary = "Add alert log entry")
+    public ResponseEntity<AlertLog> addLog(
+            @PathVariable Long warrantyId,
+            @RequestBody String message) {
+        return ResponseEntity.ok(logService.addLog(warrantyId, message));
     }
 
     @GetMapping("/{warrantyId}")
-    public List<AlertLog> getLogs(@PathVariable Long warrantyId) {
-        return service.getLogs(warrantyId);
+    @Operation(summary = "List alert logs for warranty")
+    public ResponseEntity<List<AlertLog>> getLogs(@PathVariable Long warrantyId) {
+        return ResponseEntity.ok(logService.getLogs(warrantyId));
     }
-    @PutMapping("/{id}")
-public AlertLog updateAlert(@PathVariable Long id, @RequestBody AlertLog alertLog) {
-    return service.updateAlert(id, alertLog);
-}
-
-@DeleteMapping("/{id}")
-public String deleteAlert(@PathVariable Long id) {
-    service.deleteAlert(id);
-    return "Alert deleted successfully";
-}
 }
